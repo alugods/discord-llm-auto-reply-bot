@@ -17,7 +17,7 @@ with open('config.json') as f:
 TOKEN = os.getenv("DISCORD_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 TRIGGER_KEYWORDS = config.get("trigger_keywords", [])
-REPLY_PROBABILITY = config.get("reply_probability", 0.8)
+REPLY_PROBABILITY = config.get("reply_probability", 0.8) #set here and on config.json too for reply probability (optional)
 DEFAULT_RESPONSE = config.get("default_response", "Interesting.")
 TARGET_GUILD_ID = config.get("target_guild_id")
 TARGET_CHANNEL_ID = config.get("target_channel_id")
