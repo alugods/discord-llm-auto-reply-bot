@@ -45,7 +45,7 @@ cd discord-llm-auto-reply-bot
 pip install -r requirements.txt
 ```
 
-![Visitor Count](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/alugods/discord-llm-auto-reply-bot&title=Visitors)
+
 
 
 
