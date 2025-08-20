@@ -9,7 +9,22 @@ from discord.ext import commands, tasks
 import google.generativeai as genai
 from collections import deque
 
-# Load config & secrets
+RED     = "\033[91m"
+GREEN   = "\033[92m"
+YELLOW  = "\033[93m"
+BLUE    = "\033[94m"
+MAGENTA = "\033[95m"
+CYAN    = "\033[96m"
+RESET   = "\033[0m"
+
+print(f"""{CYAN}
+==========================================
+   {GREEN}Created by{RESET} : {YELLOW}Hanif Fathoni{RESET}
+   {GREEN}GitHub    {RESET}: {BLUE}https://github.com/alugods{RESET}
+   {GREEN}Buy me a tea ☕{RESET}: {MAGENTA}0x9ea11f3fe4d90bb6bebe348eb9e6bab466abfaf3{RESET}
+{CYAN}=========================================={RESET}
+""")
+
 load_dotenv()
 with open('config.json') as f:
     config = json.load(f)
@@ -17,24 +32,22 @@ with open('config.json') as f:
 TOKEN = os.getenv("DISCORD_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 TRIGGER_KEYWORDS = config.get("trigger_keywords", [])
-REPLY_PROBABILITY = config.get("reply_probability", 0.8) #set here and on config.json too for reply probability (optional)
+REPLY_PROBABILITY = config.get("reply_probability", 0.8)
 DEFAULT_RESPONSE = config.get("default_response", "Interesting.")
 TARGET_GUILD_ID = config.get("target_guild_id")
 TARGET_CHANNEL_ID = config.get("target_channel_id")
 PERSONA_PROMPT = config.get("persona_prompt")
-EXCLUDED_BOT_IDS = config.get("excluded_bot_ids", [])  # ⛔ Daftar bot yang di-skip
+EXCLUDED_BOT_IDS = config.get("excluded_bot_ids", []) 
 
-# Init Gemini
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-2.5-flash")
 
-# Init Discord bot — NO intents
 bot = commands.Bot(command_prefix="!", self_bot=True)
 
 priority_buffer = deque(maxlen=2)
 message_buffer = deque(maxlen=35)
-conversation_history = {}      # {user_id: [msg1, msg2, ...]}
-history_timestamp = {}         # {user_id: last_interaction_time}
+conversation_history = {}  
+history_timestamp = {}        
 
 BAD_REPLIES = ["ok", "okay", "yes", "cool", "haha", "lmao"]
 
@@ -48,7 +61,6 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    # ⛔ Skip jika pesan dari bot lain yang dikecualikan
     if message.author.id in EXCLUDED_BOT_IDS:
         return
 
@@ -62,18 +74,17 @@ async def on_message(message):
         )
 
         if any(bad == content.strip() for bad in BAD_REPLIES) or len(content) < 17:
-            return  # Skip pesan pendek
+            return  
 
         if is_reply_to_bot:
             user_id = message.author.id
             prev = message.reference.resolved.content
 
-            # Simpan history
+
             conversation_history.setdefault(user_id, []).append(f"Bot: {prev}")
             conversation_history[user_id].append(f"User: {message.content}")
             conversation_history[user_id] = conversation_history[user_id][-6:]
 
-            # Update timestamp
             history_timestamp[user_id] = time.time()
 
             priority_buffer.append(message)
@@ -89,7 +100,6 @@ async def auto_reply_loop():
     if not priority_buffer and not message_buffer:
         return
 
-    # Clean expired history (older than 30 minutes = 1800 seconds)
     now = time.time()
     for uid in list(conversation_history.keys()):
         last = history_timestamp.get(uid, 0)
@@ -109,7 +119,6 @@ async def auto_reply_loop():
     if not message:
         return
 
-    # ⛔ Jangan balas bot yang dikecualikan
     if message.author.id in EXCLUDED_BOT_IDS:
         print(f"[SKIP] Message from excluded bot: {message.author.name}")
         return
@@ -121,7 +130,6 @@ async def auto_reply_loop():
             await message.reply(reply)
             print(f"[REPLIED] {message.author.name}: {reply}")
 
-            # Update conversation + timestamp
             conversation_history.setdefault(user_id, []).append(f"Bot: {reply}")
             conversation_history[user_id] = conversation_history[user_id][-6:]
             history_timestamp[user_id] = time.time()
