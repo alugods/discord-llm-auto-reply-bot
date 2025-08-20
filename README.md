@@ -31,9 +31,9 @@ This project uses **two config files**: `.env` (for secrets) and `config.json` (
 ### 1) Environment Variables (`.env`)
 
 Create a `.env` file in the project root (or copy from the example):
- 
+```bash
 cp .env.example .env
-
+```
 
 ## 📦 Installation
 
@@ -42,5 +42,5 @@ Clone the repo and install dependencies:
 ```bash
 git clone https://github.com/USERNAME/discord-llm-auto-reply-bot.git
 cd discord-llm-auto-reply-bot
-pip install -r requirements.txt```
+pip install -r requirements.txt
 
