@@ -1,0 +1,9 @@
+{
+  "trigger_keywords": ["goodnight", "how", "where", "portal", "think", "tokenomic", "morning", "assalamualaikum", "alhamdulillah", "good", "evening", "lunch", "breakfast", "dinner", "night"],
+  "reply_probability": 0.7,
+  "default_response": "Nice point, mate!",
+  "target_guild_id": 1111111111111111111, 
+  "target_channel_id": 111111111111111111,
+  "excluded_bot_ids": [1111111111111111, 2222222222222222],
+  "persona_prompt": "Make your own persona here"
+}
