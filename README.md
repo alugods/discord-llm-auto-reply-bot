@@ -24,7 +24,7 @@ By using this tool, you acknowledge you are doing so **consciously and responsib
 
 ## ⚙️ Configuration
 
-This project uses **two config files**: `.env` (for secrets) and `config.json` (for bot settings).
+This project uses **two config files**: `.env` (for tokens and api) and `config.json` (for bot settings).
 
 ---
 
