@@ -1,4 +1,4 @@
 python-dotenv
-discord.py-self
+discord.py
 google-generativeai
 
