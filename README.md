@@ -40,7 +40,7 @@ cp .env.example .env
 Clone the repo and install dependencies:
 
 ```bash
-git clone https://github.com/USERNAME/discord-llm-auto-reply-bot.git
+git clone https://github.com/alugods/discord-llm-auto-reply-bot.git
 cd discord-llm-auto-reply-bot
 pip install -r requirements.txt
 ```
