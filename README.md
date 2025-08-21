@@ -43,4 +43,9 @@ Clone the repo and install dependencies:
 git clone https://github.com/USERNAME/discord-llm-auto-reply-bot.git
 cd discord-llm-auto-reply-bot
 pip install -r requirements.txt
+```
+
+
+
+
 
